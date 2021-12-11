@@ -16,12 +16,14 @@ const dateEl = document.getElementById('currentDay');
 
 function fullDate() {
     let today = new Date();
-
     let weekDay = today.getDay();
+    const dayList = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday','Sunday']
+    let dayName = dayList[weekDay];
     let dd = today.getDate();
     let mm = today.getMonth()+1; 
     let yyyy = today.getFullYear();
     
+
     if(dd<10) 
     {
         dd='0'+dd;
@@ -31,9 +33,11 @@ function fullDate() {
     {
         mm='0'+mm;
     } 
-    today = mm+'-'+dd+'-'+yyyy;
-    console.log(today);
-    today = mm+'/'+dd+'/'+yyyy;
-    console.log(today);
+    today = `${dayName}, ${mm} - ${dd} - ${yyyy}`;
+    let fullDate = document.createElement('h1');
+        fullDate.textContent = today;
+        currentDay.appendChild(fullDate);
 }
+fullDate();
+
 
