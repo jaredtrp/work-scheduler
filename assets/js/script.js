@@ -50,18 +50,16 @@ let mm = today.getMonth()+1;
 let yyyy = today.getFullYear();
 let timeHour = today.getHours();
 
-console.log(timeHour);
-
+// Function to obtain and display the full day and date
 function fullDate() {
-    if(dd<10) 
-    {
+    if(dd<10) {
         dd='0'+dd;
     } 
 
-    if(mm<10) 
-    {
+    if(mm<10) {
         mm='0'+mm;
     } 
+
     today = `${dayName}, ${mm} - ${dd} - ${yyyy}`;
     let fullDate = document.createElement('h1');
         fullDate.textContent = today;
@@ -69,6 +67,7 @@ function fullDate() {
 }
 fullDate();
 
+// Inserts the full schedule of items from 9am - 5pm
 function fullSchedule() {
     for(i = 0; i < workHours.length; i++) {
         let containerSections = document.createElement('div');
@@ -86,20 +85,56 @@ function fullSchedule() {
         timeSlot.textContent = workHours[i];
         blockEl.appendChild(timeSlot);
 
-        let eventWritingSection = document.createElement('p');
-        eventWritingSection.id = 'eventWritingSection' + workHours.indexOf();
-        eventWritingSection.textContent = ' ';
-        eventWritingSection.classList = 'col-9';
+        let eventWritingSection = document.createElement('textarea');
+        
+        // const saveToLocal = localStorage.setItem(eventWritingSection.id, eventWritingSection.textContent);
+        // console.log(eventWritingSection.textContent);
+
+        eventWritingSection.id = 'eventWritingSection' + workHours[i];
+        eventWritingSection.classList = 'col-10';
         containerSections.appendChild(eventWritingSection);
-            if(workHours[i] < timeHour) {
-                eventWritingSection.classList = 'col-9 past';
-            } else if (workHours[i] == timeHour) {
-                eventWritingSection.classList = 'col-9 present';
-            } else if (workHours[i] > timeHour) {
-                eventWritingSection.classList = 'col-9 future';
-            } else {
-                console.log('none of the above')
-            }
+
+        // Color coding feature based on past, present, or future entries
+        if(workHours[i] < timeHour) {
+            eventWritingSection.classList = 'col-10 past';
+
+            // if(workHours[i] <=11) {
+            //     workHours[i] = workHours[i].toString() + ' AM';
+            // } else if(workHours[i] = 12) {
+            //     workHours[i] = workHours[i].toString() + ' PM';
+            // } else if(workHours[i] > 12) {
+            //     workHours[i] = workHours[i].toString() % 12 + ' PM'
+            // }
+            // timeSlot.textContent = workHours[i];
+            // blockEl.appendChild(timeSlot);
+
+        } else if (workHours[i] == timeHour) {
+            eventWritingSection.classList = 'col-10 present';
+
+            // if(workHours[i] <=11) {
+            //     workHours[i] = workHours[i].toString() + ' AM';
+            // } else if(workHours[i] = 12) {
+            //     workHours[i] = workHours[i].toString() + ' PM';
+            // } else if(workHours[i] > 12) {
+            //     workHours[i] = workHours[i].toString() % 12 + ' PM'
+            // }
+            // timeSlot.textContent = workHours[i];
+            // blockEl.appendChild(timeSlot);
+
+        } else if (workHours[i] > timeHour) {
+            eventWritingSection.classList = 'col-10 future';
+            // if(workHours[i] <=11) {
+            //     workHours[i] = workHours[i].toString() + ' AM';
+            // } else if(workHours[i] = 12) {
+            //     workHours[i] = workHours[i].toString() + ' PM';
+            // } else if(workHours[i] > 12) {
+            //     workHours[i] = workHours[i].toString() % 12 + ' PM';
+            // }
+            // timeSlot.textContent = workHours[i];
+            // blockEl.appendChild(timeSlot);
+        } else {
+            console.log('none of the above')
+        }
         
         let saveButtonSlot = document.createElement('p');
         saveButtonSlot.id = 'saveButtonSlot' + workHours.indexOf();
@@ -108,9 +143,13 @@ function fullSchedule() {
 
         let saveButton = document.createElement('button');
         saveButton.id = 'saveButton' + workHours.indexOf();
-        saveButton.classList = 'saveBtn';
-        saveButton.innerHTML = "<span class='glyphicon glyphicon-floppy-save'></span>"
+        saveButton.classList = 'saveBtn save-icon';
         saveButtonSlot.appendChild(saveButton);
+
     }
 }
 fullSchedule();
+
+function timeConvertor() {
+
+}

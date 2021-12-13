@@ -10,7 +10,7 @@ body {
     resize: none;
     color: #000000;
     border-left: 1px solid black;
-    padding: 10px;
+    height: 70px;
   }
   
   .jumbotron {
@@ -40,6 +40,7 @@ body {
     background-color: #ffffff;
     color: #000000;
     border-top: 1px dashed #000000;
+    padding-top: 10px;
   }
   
   .past {
@@ -63,9 +64,20 @@ body {
     border-bottom-right-radius: 15px;
     background-color: #06AED5;
     color: white;
+    padding: 15px;
+    height: 70px;
+    align-items: center;
   }
   
   .saveBtn i:hover {
     font-size: 20px;
     transition: all .3s ease-in-out;
+  }
+
+  .save-icon {
+    background-image: url(../images/save-button.svg);
+    background-size: 15px;
+    background-position: center center;
+    background-repeat: no-repeat;
+    padding: 0 30px 0 30px;
   }
