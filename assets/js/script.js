@@ -43,7 +43,7 @@ const workHours = [9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23];
 
 let today = new Date();
 let dayIndex = today.getDay();
-const dayList = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday','Sunday']
+const dayList = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday','Saturday']
 let dayName = dayList[dayIndex];
 let dd = today.getDate();
 let mm = today.getMonth()+1; 
@@ -83,73 +83,62 @@ function fullSchedule() {
         timeSlot.id = "timeSlot" + workHours.indexOf();
         timeSlot.classList = 'hour';
         timeSlot.textContent = workHours[i];
+        if(workHours[i] == 12) {
+            timeSlot.textContent = workHours[i] + ' PM'
+        } 
+        if(workHours[i] > 12){
+            timeSlot.textContent = workHours[i] - 12 + ' PM'
+        } else {
+            timeSlot.textContent = workHours[i] + ' AM'
+        }
+        
         blockEl.appendChild(timeSlot);
 
         let eventWritingSection = document.createElement('textarea');
         
+        // Attempt at saving to local storage
         // const saveToLocal = localStorage.setItem(eventWritingSection.id, eventWritingSection.textContent);
         // console.log(eventWritingSection.textContent);
 
         eventWritingSection.id = 'eventWritingSection' + workHours[i];
         eventWritingSection.classList = 'col-10';
+        if(localStorage.getItem('storedText'+workHours[i])) {
+            // console.log(JSON.parse(localStorage.getItem('storedText'+i)))
+            var obj = JSON.parse(localStorage.getItem('storedText'+workHours[i]))
+            var where = obj[0].hour
+            var text = obj[0].text
+            console.log(obj[0].text)
+            eventWritingSection.innerText = text
+        }
         containerSections.appendChild(eventWritingSection);
 
         // Color coding feature based on past, present, or future entries
         if(workHours[i] < timeHour) {
             eventWritingSection.classList = 'col-10 past';
-
-            // if(workHours[i] <=11) {
-            //     workHours[i] = workHours[i].toString() + ' AM';
-            // } else if(workHours[i] = 12) {
-            //     workHours[i] = workHours[i].toString() + ' PM';
-            // } else if(workHours[i] > 12) {
-            //     workHours[i] = workHours[i].toString() % 12 + ' PM'
-            // }
-            // timeSlot.textContent = workHours[i];
-            // blockEl.appendChild(timeSlot);
-
         } else if (workHours[i] == timeHour) {
             eventWritingSection.classList = 'col-10 present';
-
-            // if(workHours[i] <=11) {
-            //     workHours[i] = workHours[i].toString() + ' AM';
-            // } else if(workHours[i] = 12) {
-            //     workHours[i] = workHours[i].toString() + ' PM';
-            // } else if(workHours[i] > 12) {
-            //     workHours[i] = workHours[i].toString() % 12 + ' PM'
-            // }
-            // timeSlot.textContent = workHours[i];
-            // blockEl.appendChild(timeSlot);
-
         } else if (workHours[i] > timeHour) {
             eventWritingSection.classList = 'col-10 future';
-            // if(workHours[i] <=11) {
-            //     workHours[i] = workHours[i].toString() + ' AM';
-            // } else if(workHours[i] = 12) {
-            //     workHours[i] = workHours[i].toString() + ' PM';
-            // } else if(workHours[i] > 12) {
-            //     workHours[i] = workHours[i].toString() % 12 + ' PM';
-            // }
-            // timeSlot.textContent = workHours[i];
-            // blockEl.appendChild(timeSlot);
         } else {
-            console.log('none of the above')
+            console.log('none of the above');
         }
         
         let saveButtonSlot = document.createElement('p');
-        saveButtonSlot.id = 'saveButtonSlot' + workHours.indexOf();
+        saveButtonSlot.id = 'saveButtonSlot' + workHours[i];
         saveButtonSlot.classList = 'saveButtonSlot col-1';
         containerSections.appendChild(saveButtonSlot);
 
         let saveButton = document.createElement('button');
-        saveButton.id = 'saveButton' + workHours.indexOf();
+        saveButton.id = 'saveButton_' + workHours[i];
         saveButton.classList = 'saveBtn save-icon';
+        saveButton.onclick = function() {
+            let num = this.id.split('_')[1];
+            let textTyped = document.querySelector('#eventWritingSection' + num).value;
+            let savedText = JSON.stringify([{'hour': num, 'text': textTyped}])
+            localStorage.setItem('storedText'+ num, savedText);
+        }
         saveButtonSlot.appendChild(saveButton);
 
     }
 }
 fullSchedule();
-
-function timeConvertor() {
-
-}
