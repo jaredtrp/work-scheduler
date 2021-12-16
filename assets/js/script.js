@@ -13,33 +13,18 @@
 // WHEN I refresh the page
 // THEN the saved events persist
 
-
 // PSEUDOCODE
 // When the user opens the page, the full work day's schedule is populated
 // Create a variable which contains all the work hours
-// 
 // JS will populate the screen automatically with the 9AM - 5PM editable items
 // The color of each item is based on past, present, and future classes
 // When the user clicks on an item, they can edit the text within
 // When the user clicks on the save button, it saves it to local storage
 // Indicate that the item was saved
 
-
-// DAVE'S POEM
-// listen for save button clicks
-// save in localStorage
-// Show notification that item was saved to localStorage by adding class 'show'
-// Timeout to remove 'show' class after 5 seconds
-// get current number of hours
-// loop over time blocks
-// check if we've moved past this time
-// set up interval to check if current time needs to be updated
-// load any saved data from localStorage
-// display current day on page
-
 const dateEl = document.getElementById('currentDay');
 const containerEl = document.getElementById('schedule-container');
-const workHours = [9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23];
+const workHours = [9, 10, 11, 12, 13, 14, 15, 16, 17];
 
 let today = new Date();
 let dayIndex = today.getDay();
@@ -88,26 +73,21 @@ function fullSchedule() {
         } 
         if(workHours[i] > 12){
             timeSlot.textContent = workHours[i] - 12 + ' PM'
-        } else {
+        }
+        if(workHours[i] < 12) {
             timeSlot.textContent = workHours[i] + ' AM'
         }
         
         blockEl.appendChild(timeSlot);
 
         let eventWritingSection = document.createElement('textarea');
-        
-        // Attempt at saving to local storage
-        // const saveToLocal = localStorage.setItem(eventWritingSection.id, eventWritingSection.textContent);
-        // console.log(eventWritingSection.textContent);
 
         eventWritingSection.id = 'eventWritingSection' + workHours[i];
         eventWritingSection.classList = 'col-10';
-        if(localStorage.getItem('storedText'+workHours[i])) {
-            // console.log(JSON.parse(localStorage.getItem('storedText'+i)))
-            var obj = JSON.parse(localStorage.getItem('storedText'+workHours[i]))
+        if(localStorage.getItem('storedText'+ workHours[i])) {
+            var obj = JSON.parse(localStorage.getItem('storedText'+ workHours[i]))
             var where = obj[0].hour
             var text = obj[0].text
-            console.log(obj[0].text)
             eventWritingSection.innerText = text
         }
         containerSections.appendChild(eventWritingSection);
